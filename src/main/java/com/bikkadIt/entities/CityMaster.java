@@ -1,12 +1,14 @@
 package com.bikkadIt.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name="CITY_MASTER")
+@Entity
 public class CityMaster {
 	
 	@Column(name="CITY_ID")
