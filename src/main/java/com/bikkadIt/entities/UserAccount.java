@@ -29,7 +29,7 @@ public class UserAccount {
 	@Column(name="LAST_NAME")
 	private String last_name;
 	@Column(name="USER_EMAIL")
-	private String user_email;
+	private String useremail;
 	@Column(name="USER_PASSWORD")
 	private String password;
 	@Column(name="USER_PHNO")
@@ -46,13 +46,12 @@ public class UserAccount {
 	private String city;
 	@Column(name="ACTIVE_SW")
 	private char active_sw;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="COUNTRY_ID")
-	private CountryMaster countryMaster;
-	
-	
-	
+	@Column(name="COUNTRY_ID")
+	private Integer countryId;
+	@Column(name="STATE_ID")
+	private Integer stateId;
+	@Column(name="CITY_ID")
+	private Integer cityId;
 	public Integer getUser_id() {
 		return user_id;
 	}
@@ -71,11 +70,11 @@ public class UserAccount {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public String getUser_email() {
-		return user_email;
+	public String getUseremail() {
+		return useremail;
 	}
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
 	}
 	public String getPassword() {
 		return password;
@@ -107,26 +106,49 @@ public class UserAccount {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
 	public char getActive_sw() {
 		return active_sw;
 	}
 	public void setActive_sw(char active_sw) {
 		this.active_sw = active_sw;
 	}
-	public CountryMaster getCountryMaster() {
-		return countryMaster;
+	public Integer getCountryId() {
+		return countryId;
 	}
-	public void setCountryMaster(CountryMaster countryMaster) {
-		this.countryMaster = countryMaster;
+	public void setCountryId(Integer countryId) {
+		this.countryId = countryId;
 	}
-	
+	public Integer getStateId() {
+		return stateId;
+	}
+	public void setStateId(Integer stateId) {
+		this.stateId = stateId;
+	}
+	public Integer getCityId() {
+		return cityId;
+	}
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
 	@Override
 	public String toString() {
 		return "UserAccount [user_id=" + user_id + ", first_name=" + first_name + ", last_name=" + last_name
-				+ ", user_email=" + user_email + ", password=" + password + ", user_phno=" + user_phno + ", user_DOB="
+				+ ", user_email=" + useremail + ", password=" + password + ", user_phno=" + user_phno + ", user_DOB="
 				+ user_DOB + ", gender=" + gender + ", country=" + country + ", state=" + state + ", city=" + city
-				+ ", active_sw=" + active_sw + ", countryMaster=" + countryMaster + "]";
+				+ ", active_sw=" + active_sw + ", countryId=" + countryId + ", stateId=" + stateId + ", cityId="
+				+ cityId + "]";
 	}
 	
 	

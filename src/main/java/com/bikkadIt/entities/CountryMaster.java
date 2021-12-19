@@ -1,5 +1,7 @@
 package com.bikkadIt.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,15 +19,13 @@ public class CountryMaster {
 	
 	@Column(name="COUNTRY_ID")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer country_id;
 	
 	@Column(name="COUNTRY_NAME")
 	private String country_name;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="STATE_ID")
-	private StateMaster stateMaster;
+
+	@Column(name="COUNTRY_CODE")
+	private Integer country_code;
 
 	public Integer getCountry_id() {
 		return country_id;
@@ -42,19 +43,21 @@ public class CountryMaster {
 		this.country_name = country_name;
 	}
 
-	public StateMaster getStateMaster() {
-		return stateMaster;
+	public Integer getCountry_code() {
+		return country_code;
 	}
 
-	public void setStateMaster(StateMaster stateMaster) {
-		this.stateMaster = stateMaster;
+	public void setCountry_code(Integer country_code) {
+		this.country_code = country_code;
 	}
 
 	@Override
 	public String toString() {
-		return "CountryMaster [country_id=" + country_id + ", country_name=" + country_name + ", stateMaster="
-				+ stateMaster + "]";
+		return "CountryMaster [country_id=" + country_id + ", country_name=" + country_name + ", country_code="
+				+ country_code + "]";
 	}
+	
+	
 	
 	
 	
