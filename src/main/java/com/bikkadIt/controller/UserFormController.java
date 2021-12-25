@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bikkadIt.bindings.UserForm;
+import com.bikkadIt.constants.AppConstant;
 import com.bikkadIt.entities.UserAccount;
 import com.bikkadIt.service.UserServiceI;
 import com.bikkadIt.service.UserServiceImpl;
@@ -29,10 +30,10 @@ public class UserFormController {
 		boolean saveUser = userServiceImpl.saveUser(userForm);
 		if(saveUser)
 		{
-			msg="Success";
+			msg=AppConstant.SUCCESS;
 			return new ResponseEntity<String>(msg,HttpStatus.CREATED);
 		}
-		msg="Failed";
+		msg=AppConstant.FAILED;
 		return new ResponseEntity<String>(msg,HttpStatus.BAD_GATEWAY);
 	}
 	
@@ -62,14 +63,16 @@ public class UserFormController {
 	{
 		String msg="";
 		boolean emailUnique = userServiceImpl.emailUnique(email);
-		if(emailUnique)
+		if(emailUnique==true)
 		{
-			msg="Unique";
+			msg=AppConstant.UNIQUE;
 			return new ResponseEntity<String>(msg,HttpStatus.OK);
 		}
-		
-		msg="Duplicate";
+		else
+		{
+		msg=AppConstant.DUPLICATE;
 		return new ResponseEntity<String>(msg,HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

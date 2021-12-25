@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration
-//@EnableSwagger2
+@EnableSwagger2
 public class SwaggerConfig {
 	
 		@Bean
@@ -19,7 +19,7 @@ public class SwaggerConfig {
 		{
 			return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.bikkadIt.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.bikkadIt"))
 				.paths(PathSelectors.any())
 				.build();
 		}

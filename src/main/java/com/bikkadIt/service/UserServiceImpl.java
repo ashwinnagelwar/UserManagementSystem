@@ -2,9 +2,13 @@ package com.bikkadIt.service;
 
 import java.io.BufferedReader;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,6 +25,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import com.bikkadIt.bindings.LoginForm;
 import com.bikkadIt.bindings.UnlockAccForm;
 import com.bikkadIt.bindings.UserForm;
+import com.bikkadIt.constants.AppConstant;
 import com.bikkadIt.entities.CityMaster;
 import com.bikkadIt.entities.CountryMaster;
 import com.bikkadIt.entities.StateMaster;
@@ -84,34 +89,37 @@ public class UserServiceImpl implements UserServiceI{
 	@Override
 	public boolean emailUnique(String email) 
 	{
-		UserAccount UserAccount = userRepository.findByUseremail(email);
+		UserAccount UserAccount = userRepository.findByUserEmail(email);
 		
 		if(UserAccount!=null)
 		{
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean saveUser(UserForm userForm) {
 		
-		userForm.setAccStatus('N');
+		if(userForm.getPassword()==null && userForm.getActive_sw()==null)
+		{
+		userForm.setActive_sw("N");
 		userForm.setPassword(generateTempPwd());
-		
+		}
+		System.out.println(userForm);
 		UserAccount entity=new UserAccount();
 		
 		BeanUtils.copyProperties(userForm, entity);
-		
+		System.out.println(entity);
 		UserAccount entity2 = userRepository.save(entity);
 		if(entity2.getUser_id()!=null)
 		{
 			String body=getUserEmailBody(entity2);
 			
-			String subject="Good Morning";
+			String subject=AppConstant.REG_EMAIL_SUBJECT;
 			
-			emailUtil.sendMail(userForm.getUser_email(), body, subject);
+			emailUtil.sendMail(entity2.getUserEmail(), body, subject);
 			return true;
 		}
 		return false;
@@ -120,19 +128,17 @@ public class UserServiceImpl implements UserServiceI{
 	private String getUserEmailBody(UserAccount userAccount) 
 	{
 		StringBuffer sb=new StringBuffer();
-		File file=new File("User_Email_Body.txt");
+		String fileName="User_Email_Body.txt";
 		
-		FileReader fr = null;
+		List<String> lines = new ArrayList<String>();
 		try {
-			fr = new FileReader(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			BufferedReader br = Files.newBufferedReader(Paths.get(fileName));
+			lines = br.lines().collect(Collectors.toList());
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
-		BufferedReader br=new BufferedReader(fr);
 		
-		List<String> lines=new ArrayList<String>();
-			lines=br.lines().collect(Collectors.toList());
 			lines.forEach(line->
 			{
 				if(line.contains("{FNAME}"))
@@ -149,18 +155,20 @@ public class UserServiceImpl implements UserServiceI{
 				}
 				if(line.contains("{EMAIL}"))
 				{
-					line.replace("{EMAIL}", userAccount.getUseremail());
+					line.replace("{EMAIL}", userAccount.getUserEmail());
 				}
 				
 				sb.append(line);
+				
 			});
+			System.out.println(sb);
 			return sb.toString();
 		
 	}
 	
 	private String generateTempPwd()
 	{
-		String temPwd=RandomStringUtils.randomAlphanumeric(6);
+		String temPwd=RandomStringUtils.randomAlphabetic(6);
 		return temPwd;
 	}
 
@@ -174,10 +182,10 @@ public class UserServiceImpl implements UserServiceI{
 	public boolean unlockAccount(UnlockAccForm unlockAccForm) {
 		String email = unlockAccForm.getEmail();
 		String tempPwd = unlockAccForm.getTempPwd();
-		UserAccount userAccount = userRepository.findByUseremailAndPassword(email, tempPwd);
+		UserAccount userAccount = userRepository.findByUserEmailAndPassword(email, tempPwd);
 		if(userAccount!=null)
 		{
-			userAccount.setActive_sw('Y');
+			userAccount.setActive_sw("Y");
 			userAccount.setPassword(unlockAccForm.getNewPwd());
 			userRepository.save(userAccount);
 			return true;
@@ -188,16 +196,16 @@ public class UserServiceImpl implements UserServiceI{
 
 	@Override
 	public String forgotPwd(String emailId) {
-		UserAccount UserAccount = userRepository.findByUseremail(emailId);
+		UserAccount UserAccount = userRepository.findByUserEmail(emailId);
 		if(UserAccount!=null)
 		{
-			String subject="Forget Password Sent";
+			String subject=AppConstant.FORGET_EMAIL_SUBJECT;
 			String body=getForgetPwd(UserAccount);
 			
 			emailUtil.sendMail(emailId, body, subject);
-			return "SUCCESS";
+			return AppConstant.SUCCESS;
 		}
-		return "FAIL";
+		return AppConstant.FAILED;
 	}
 	
 	
@@ -244,12 +252,12 @@ public class UserServiceImpl implements UserServiceI{
 	@Override
 	public String loginCheck(LoginForm loginForm) {
 		
-	UserAccount userAccount=userRepository.findByUseremailAndPassword(loginForm.getUser_email(), loginForm.getPassword());
+	UserAccount userAccount=userRepository.findByUserEmailAndPassword(loginForm.getUser_email(), loginForm.getPassword());
 		
 		if(userAccount!=null)
 		{
-			char active=userAccount.getActive_sw();
-			if(active=='Y')
+			String active=userAccount.getActive_sw();
+			if(active=="Y")
 			{
 				return "Your account is Locked";
 			}

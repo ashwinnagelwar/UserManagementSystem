@@ -1,5 +1,6 @@
 package com.bikkadIt.util;
 
+import javax.mail.Multipart;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class EmailUtil {
 			MimeMessage mimeMessage=javaMailSender.createMimeMessage();
 			
 			MimeMessageHelper helper=new MimeMessageHelper(mimeMessage);
-			
+			helper.setFrom("ashwinnagelwar@gmail.com");
 			helper.setTo(to);
 			helper.setSubject(subject);
 			helper.setText(body);

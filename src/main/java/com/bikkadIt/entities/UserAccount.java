@@ -29,7 +29,7 @@ public class UserAccount {
 	@Column(name="LAST_NAME")
 	private String last_name;
 	@Column(name="USER_EMAIL")
-	private String useremail;
+	private String userEmail;
 	@Column(name="USER_PASSWORD")
 	private String password;
 	@Column(name="USER_PHNO")
@@ -45,7 +45,7 @@ public class UserAccount {
 	@Column(name="USER_CITY")
 	private String city;
 	@Column(name="ACTIVE_SW")
-	private char active_sw;
+	private String active_sw;
 	@Column(name="COUNTRY_ID")
 	private Integer countryId;
 	@Column(name="STATE_ID")
@@ -70,11 +70,11 @@ public class UserAccount {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public String getUseremail() {
-		return useremail;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setUseremail(String useremail) {
-		this.useremail = useremail;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	public String getPassword() {
 		return password;
@@ -118,10 +118,10 @@ public class UserAccount {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public char getActive_sw() {
+	public String getActive_sw() {
 		return active_sw;
 	}
-	public void setActive_sw(char active_sw) {
+	public void setActive_sw(String active_sw) {
 		this.active_sw = active_sw;
 	}
 	public Integer getCountryId() {
@@ -145,7 +145,7 @@ public class UserAccount {
 	@Override
 	public String toString() {
 		return "UserAccount [user_id=" + user_id + ", first_name=" + first_name + ", last_name=" + last_name
-				+ ", user_email=" + useremail + ", password=" + password + ", user_phno=" + user_phno + ", user_DOB="
+				+ ", user_email=" + userEmail + ", password=" + password + ", user_phno=" + user_phno + ", user_DOB="
 				+ user_DOB + ", gender=" + gender + ", country=" + country + ", state=" + state + ", city=" + city
 				+ ", active_sw=" + active_sw + ", countryId=" + countryId + ", stateId=" + stateId + ", cityId="
 				+ cityId + "]";

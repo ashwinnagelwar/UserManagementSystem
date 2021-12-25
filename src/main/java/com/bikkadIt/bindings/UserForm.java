@@ -8,20 +8,13 @@ public class UserForm {
 	
 	private String last_name;
 	
-	private String user_email;
+	private String userEmail;
 	
 	private Long user_phno;
 	
 	private Date user_DOB;
 	
 	private String gender;
-	
-	private String country;
-	
-	private String state;
-
-	private String city;
-	
 	
 	private Integer countryId;
 	
@@ -31,7 +24,7 @@ public class UserForm {
 	
 	private String password;
 	
-	private char AccStatus;
+	private String active_sw;
 
 	public String getPassword() {
 		return password;
@@ -41,12 +34,12 @@ public class UserForm {
 		this.password = password;
 	}
 
-	public char getAccStatus() {
-		return AccStatus;
+	public String getActive_sw() {
+		return active_sw;
 	}
 
-	public void setAccStatus(char accStatus) {
-		AccStatus = accStatus;
+	public void setActive_sw(String active_sw) {
+		this.active_sw = active_sw;
 	}
 
 	public String getFirst_name() {
@@ -65,12 +58,12 @@ public class UserForm {
 		this.last_name = last_name;
 	}
 
-	public String getUser_email() {
-		return user_email;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public Long getUser_phno() {
@@ -97,29 +90,6 @@ public class UserForm {
 		this.gender = gender;
 	}
 
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
 
 	public Integer getCountryId() {
 		return countryId;
@@ -144,6 +114,15 @@ public class UserForm {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
+
+	@Override
+	public String toString() {
+		return "UserForm [first_name=" + first_name + ", last_name=" + last_name + ", user_email=" + userEmail
+				+ ", user_phno=" + user_phno + ", user_DOB=" + user_DOB + ", gender=" + gender + ", countryId="
+				+ countryId + ", stateId=" + stateId + ", cityId=" + cityId + ", password=" + password + ", AccStatus="
+				+ active_sw + "]";
+	}
+	
 	
 	
 }
